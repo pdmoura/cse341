@@ -1,0 +1,22 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "simple api to frontend",
+	"license": "ISC",
+	"author": "Pedro A",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon app.js"
+	},
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.6",
+		"dotenv": "^17.3.1",
+		"express": "^4.16.3",
+		"mongodb": "^7.1.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.14"
+	}
+}
