@@ -1,12 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const dns = require('dns');
+
+if (process.env.NODE_ENV !== 'production') {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
 const app = express();
 
 app
   .use(cors())
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
-  .use('/', require('./routes'));
+  .use('/', require('./routes'))
 
 const db = require('./models');
 db.mongoose
