@@ -10,7 +10,13 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
-  const userId = new ObjectId(req.params.id);
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+
+  const userId = new ObjectId(id);
   const result = await mongodb.getDb().db().collection('contacts').find({ _id: userId });
   result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
@@ -35,8 +41,13 @@ const createContact = async (req, res) => {
 };
 
 const updateContact = async (req, res) => {
-  const userId = new ObjectId(req.params.id);
-  // be aware of updateOne if you only want to update specific fields
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+
+  const userId = new ObjectId(id);
   const contact = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -58,8 +69,14 @@ const updateContact = async (req, res) => {
 };
 
 const deleteContact = async (req, res) => {
-  const userId = new ObjectId(req.params.id);
-  const response = await mongodb.getDb().db().collection('contacts').remove({ _id: userId }, true);
+  const { id } = req.params;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+
+  const userId = new ObjectId(id);
+  const response = await mongodb.getDb().db().collection('contacts').deleteOne({ _id: userId });
   console.log(response);
   if (response.deletedCount > 0) {
     res.status(204).send();
